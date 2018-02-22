@@ -18,10 +18,10 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>GetImageServlet</servlet-name>
-  	<url-pattern>/GetImageServlet</url-pattern>
+  	<url-pattern>/getimage</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>SubmitImageServlet</servlet-name>
-  	<url-pattern>/SubmitImageServlet</url-pattern>
+  	<url-pattern>/submitimage</url-pattern>
   </servlet-mapping>
 </web-app>
