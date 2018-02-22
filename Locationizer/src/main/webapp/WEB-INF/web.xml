@@ -4,4 +4,24 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>GetImageServlet</servlet-name>
+  	<display-name>GetImageServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.GetImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SubmitImageServlet</servlet-name>
+  	<display-name>SubmitImageServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlet.SubmitImageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetImageServlet</servlet-name>
+  	<url-pattern>/GetImageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SubmitImageServlet</servlet-name>
+  	<url-pattern>/SubmitImageServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
