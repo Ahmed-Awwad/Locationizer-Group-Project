@@ -2,14 +2,21 @@ package com.revature.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import com.revature.domain.User;
+import com.revature.util.HibernateUtil;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> getUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = HibernateUtil.getSession();
+		
+		List<User> u = s.createQuery("from User").list();
+		
+		
+		return u;
 	}
 
 	@Override
