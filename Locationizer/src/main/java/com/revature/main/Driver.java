@@ -15,6 +15,8 @@ public class Driver {
 		
 		udi.createUser(u1);
 		
+		udi.getUserById(1);
+		
 		List<Users> ul = udi.getUsers();
 		for(Users u : ul ) {
 			System.out.println(u.getUsername());

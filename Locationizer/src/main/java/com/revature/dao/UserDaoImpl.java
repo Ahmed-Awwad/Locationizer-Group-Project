@@ -1,8 +1,7 @@
 package com.revature.dao;
 
 import java.util.List;
-
-
+ 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -29,8 +28,13 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Users getUserById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = HibernateUtil.getSession();
+		
+		// Using get here since this is a low-cost operation
+		Users u = (Users) s.get(Users.class, id);
+		
+		s.close();
+		return u;
 	}
 
 	@Override
