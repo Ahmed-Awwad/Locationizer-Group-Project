@@ -28,7 +28,7 @@ public class Image implements Serializable {
 	public Image() {
 		super();
 	}
-
+ 
 	public Image(Users user, Blob image) {
 		super();
 		this.user = user;
