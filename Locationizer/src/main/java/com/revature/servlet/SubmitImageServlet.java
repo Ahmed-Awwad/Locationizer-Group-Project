@@ -3,6 +3,8 @@ package com.revature.servlet;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,12 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.rowset.serial.SerialBlob;
 
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+
+import com.revature.dao.UserDaoImpl;
+import com.revature.domain.Image;
+import com.revature.domain.Users;
 
 
 /**
@@ -50,9 +57,7 @@ public class SubmitImageServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		int id = 0;
-
-
-
+		
 			List<FileItem> items = null;
 
 			// Create a factory for disk-based file items
@@ -67,7 +72,6 @@ public class SubmitImageServlet extends HttpServlet {
 			} catch (FileUploadException e) {
 				e.printStackTrace();
 			}
-
 			InputStream is = null;
 			String location = "";
 			// Process the uploaded items
@@ -83,7 +87,6 @@ public class SubmitImageServlet extends HttpServlet {
 					is = item.getInputStream();
 				}
 			}
-			
 			byte [] imageBlob = null;
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
@@ -91,6 +94,29 @@ public class SubmitImageServlet extends HttpServlet {
 			while ((count = is.read(buffer)) != -1)
 			    output.write(buffer, 0, count);
 			imageBlob = output.toByteArray();
+			
+			
+			String username = "";
+			username = (String) session.getAttribute("username");
+			
+			// Get Users from username
+			UserDaoImpl udi = new UserDaoImpl();
+			Users u = udi.getUserByUsername(username);
+			
+			session.getAttribute("username");
+			
+			
+			// Could turn into byte[]
+			// Probably a better idea to do so in Image 
+			Blob blob = null;
+			try {
+				blob = new SerialBlob(imageBlob);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Need to implement.
+//			Image image = new Image(, user, image);
 			
 			// location: the location name?
 			// imageBlob: image as byte array.
