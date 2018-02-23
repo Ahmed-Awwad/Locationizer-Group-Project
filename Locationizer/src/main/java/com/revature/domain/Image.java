@@ -22,6 +22,33 @@ public class Image implements Serializable {
 	
 	@Column(name="IMAGE")
 	Blob image;
+	
+	
+
+	public Image() {
+		super();
+	}
+
+	public Image(Users user, Blob image) {
+		super();
+		this.user = user;
+		this.image = image;
+	}
+
+	public Image(Location location, Users user, Blob image) {
+		super();
+		this.location = location;
+		this.user = user;
+		this.image = image;
+	}
+
+	public Image(int id, Location location, Users user, Blob image) {
+		super();
+		this.id = id;
+		this.location = location;
+		this.user = user;
+		this.image = image;
+	}
 
 	public int getId() {
 		return id;
