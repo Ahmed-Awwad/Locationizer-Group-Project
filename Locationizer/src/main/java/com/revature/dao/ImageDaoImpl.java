@@ -2,26 +2,47 @@ package com.revature.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.revature.domain.Image;
+import com.revature.domain.Users;
+import com.revature.util.HibernateUtil;
 
 public class ImageDaoImpl implements ImageDao {
 
 	@Override
 	public List<Image> getImages() {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = HibernateUtil.getSession();
+		
+		List<Image> il = s.createQuery("from Image").list();
+		
+		s.close();
+		return il;
 	}
 
 	@Override
 	public Image getImageById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session s = HibernateUtil.getSession();
+		
+		// Using get here since this is a low-cost operation
+		Image image = (Image) s.get(Image.class, id);
+		
+		s.close();
+		return image;
 	}
 
 	@Override
 	public int createImage(Image u) {
-		// TODO Auto-generated method stub
-		return 0;
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		
+		int id = (int) s.save(u);
+		
+		tx.commit();
+		s.close();
+		
+		return id;
 	}
 
 	@Override
