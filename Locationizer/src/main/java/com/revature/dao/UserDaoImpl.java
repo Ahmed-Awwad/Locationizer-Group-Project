@@ -1,7 +1,8 @@
 package com.revature.dao;
 
 import java.util.List;
- 
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -32,6 +33,18 @@ public class UserDaoImpl implements UserDao {
 		
 		// Using get here since this is a low-cost operation
 		Users u = (Users) s.get(Users.class, id);
+		
+		s.close();
+		return u;
+	}
+	
+	// Required if sessions are going to be used.
+	public Users getUserByUsername(String username) {
+		Session s = HibernateUtil.getSession();
+		Query q = s.createQuery("from Users where username = :unameVar");
+		
+		q.setString("unameVar", username);
+		Users u = (Users) q.uniqueResult();
 		
 		s.close();
 		return u;

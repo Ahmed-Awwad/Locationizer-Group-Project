@@ -3,14 +3,25 @@ package com.revature.servlet;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.revature.dao.ImageDao;
+import com.revature.dao.ImageDaoImpl;
+import com.revature.dao.UserDaoImpl;
+import com.revature.domain.Image;
+import com.revature.domain.Users;
 
 /**
  * Servlet implementation class GetImageServlet
@@ -49,46 +60,34 @@ public class GetImageServlet extends HttpServlet {
 		} else {
 			response.sendRedirect("login");
 		}
-
-		/*
-		 * Turn the BAOS into a byte array Send byte array into response via
-		 * ServletOutputStream.
-		 */
 		
-		Blob blob = null;
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		int length=0;
-		InputStream in =null;
-		if (blob != null) {
+		UserDaoImpl udi = new UserDaoImpl();
+		ImageDaoImpl idi = new ImageDaoImpl();
 
-			
-			try {
-				in = blob.getBinaryStream();
-				length = (int) blob.length();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			int bufferSize = 1024;
-			byte[] buffer = new byte[bufferSize];
-
-			while ((length = in.read(buffer)) != -1) {
-				out.write(buffer, 0, length);
+		// Get User id from User via username
+		String username = (String) session.getAttribute("username");
+		
+		// Use username to get Users object.
+		// Use ID of Users object to obtain images
+		Users u = udi.getUserByUsername(username);
+		int id = u.getId();
+		
+		// Filter images for those with a specific User Id
+		// This could be put into a utility class
+		List<Image> imageList = idi.getImages();
+		Iterator<Image> it = imageList.iterator();
+		while(it.hasNext()) {
+			if(it.next().getUser().getId()!=id) {
+				it.remove();
 			}
 		}
-
-		byte[] buf = out.toByteArray();
-		response.setContentLength(buf.length);
-		ServletOutputStream sos = response.getOutputStream();
-		sos.write(buf);
-		sos.close();
-
-		// if(image_blob==null) {
-		// } else {
-		//// response.get
-		// }
-
+		
+		// Use GSON to send over Image
+		Gson gson = new Gson();
+		response.setContentType("JSON");
+		PrintWriter pw = response.getWriter();
+		pw.write(gson.toJson(imageList));
+		pw.flush();
 	}
 
 }

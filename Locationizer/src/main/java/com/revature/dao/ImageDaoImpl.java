@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.revature.domain.Image;
-import com.revature.domain.Users;
 import com.revature.util.HibernateUtil;
 
 public class ImageDaoImpl implements ImageDao {
@@ -25,8 +24,8 @@ public class ImageDaoImpl implements ImageDao {
 	public Image getImageById(int id) {
 		Session s = HibernateUtil.getSession();
 		
-		// Using get here since this is a low-cost operation
-		Image image = (Image) s.get(Image.class, id);
+		// Using load since image loading is relatively costly
+		Image image = (Image) s.load(Image.class, id);
 		
 		s.close();
 		return image;
