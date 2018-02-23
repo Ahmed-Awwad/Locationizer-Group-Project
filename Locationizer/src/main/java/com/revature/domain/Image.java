@@ -18,7 +18,7 @@ public class Image implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="U_ID")
-	User user;
+	Users user;
 	
 	@Column(name="IMAGE")
 	Blob image;
@@ -39,11 +39,11 @@ public class Image implements Serializable {
 		this.location = location;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

@@ -2,20 +2,20 @@ package com.revature.dao;
 
 import java.util.List;
 
-import com.revature.domain.User;
+import com.revature.domain.Users;
 
 public interface UserDao {
 
-	public List<User> getUsers();
+	public List<Users> getUsers();
 	
-	public User login(String username, String password);
+	public Users login(String username, String password);
 
-	public User getUserById(int id);
+	public Users getUserById(int id);
 
-	public int createUser(User u);
+	public int createUser(Users u);
 
-	public int updateUser(User u);
+	public int updateUser(Users u);
 
-	public int deleteUser(User u);
+	public int deleteUser(Users u);
 
 }

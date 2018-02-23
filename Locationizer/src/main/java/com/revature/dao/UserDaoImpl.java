@@ -2,49 +2,58 @@ package com.revature.dao;
 
 import java.util.List;
 
-import org.hibernate.Session;
 
-import com.revature.domain.User;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.revature.domain.Users;
 import com.revature.util.HibernateUtil;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
-	public List<User> getUsers() {
+	public List<Users> getUsers() {
 		Session s = HibernateUtil.getSession();
 		
-		List<User> u = s.createQuery("from User").list();
+		List<Users> u = s.createQuery("from Users").list();
 		
-		
+		s.close();
 		return u;
 	}
 
 	@Override
-	public User login(String username, String password) {
+	public Users login(String username, String password) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public Users getUserById(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int createUser(User u) {
+	public int createUser(Users u) {
+		Session s = HibernateUtil.getSession();
+		Transaction tx = s.beginTransaction();
+		
+		int id = (int) s.save(u);
+		
+		tx.commit();
+		s.close();
+		
+		return id;
+	}
+
+	@Override
+	public int updateUser(Users u) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int updateUser(User u) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteUser(User u) {
+	public int deleteUser(Users u) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
