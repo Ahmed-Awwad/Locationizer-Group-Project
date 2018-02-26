@@ -16,6 +16,12 @@
   	<description></description>
   	<servlet-class>com.revature.servlet.SubmitImageServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<display-name>LoginServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.revature.servlet.LoginServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>GetImageServlet</servlet-name>
   	<url-pattern>/getimage</url-pattern>
@@ -23,5 +29,9 @@
   <servlet-mapping>
   	<servlet-name>SubmitImageServlet</servlet-name>
   	<url-pattern>/submitimage</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
   </servlet-mapping>
 </web-app>
